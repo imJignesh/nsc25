@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVENTIONS - Event Agency</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Entrance Animation Canvas -->
+    <canvas id="entranceCanvas"></canvas>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top">
+        <div class="container-fluid px-4 px-md-5 py-3">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <!-- Menu Trigger -->
+                <button
+                    class="btn btn-link text-white text-decoration-none p-0 d-flex align-items-center gap-2 menu-trigger"
+                    type="button">
+                    <i class="bi bi-list fs-4"></i>
+                    <span class="text-uppercase small fw-medium tracking-wide">Menu</span>
+                </button>
+
+                <!-- Logo -->
+                <a class="navbar-brand mx-auto position-absolute start-50 translate-middle-x" href="#">
+                    <span class="brand-text">IVENTIONS</span>
+                </a>
+
+                <!-- CTA -->
+                <a href="#contact" class="btn btn-cta rounded-pill px-4 py-2 small fw-medium text-uppercase">
+                    Got a Project?
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center justify-content-center">
+        <div class="hero-video-container w-100">
+            <video autoplay muted loop playsinline
+                poster="https://i.vimeocdn.com/video/2034727849-7e2c4202d2ba3aa7f1e1f8c96d1041f5301a7a09b0861e1ab321c825fa15b2d4-d?region=us">
+                <source
+                    src="https://player.vimeo.com/progressive_redirect/playback/1099706996/rendition/1080p/file.mp4?loc=external&oauth2_token_id=1795368298&signature=d7b5c545266281f4086bf0338d3fa6032ac3c58bb71d0a005ebf5459f3906ff7"
+                    type="video/mp4">
+            </video>
+            <div class="hero-content">
+                <h1 class="hero-title display-1 fw-bold mb-4">Step into the<br>Spotlight.</h1>
+                <p class="hero-subtitle lead">We craft world-class spaces & events designed to be remembered.</p>
+            </div>
+            <div class="hero-watermark">IVENTIONS</div>
+        </div>
+    </section>
+
+    <div class="spacer-lg"></div>
+
+    <!-- Marquee Section -->
+    <section class="marquee-section">
+        <div class="container-fluid mb-4">
+            <p class="text-uppercase small tracking-wide text-muted ms-4">We are proud to have worked with</p>
+        </div>
+        <div class="marquee-track" id="marqueeTrack">
+            <!-- Duplicated list for infinite scroll effect (CSS/JS will handle the movement) -->
+            <div class="d-inline-block">
+                <span class="city-name">UEFA</span>
+                <span class="city-name">Turkish Airlines</span>
+                <span class="city-name">Pfizer</span>
+                <span class="city-name">FedEx</span>
+                <span class="city-name">Euroleague</span>
+                <span class="city-name">Ribbon</span>
+                <span class="city-name">Centrient</span>
+                <span class="city-name">Corden Pharma</span>
+                <span class="city-name">Radisys</span>
+                <span class="city-name">YPO</span>
+                <span class="city-name">Menzies</span>
+                <span class="city-name">Adevinta</span>
+                <span class="city-name">European Commission</span>
+                <span class="city-name">ISE</span>
+                <span class="city-name">Fiat</span>
+                <span class="city-name">VEEAM</span>
+            </div>
+            <div class="d-inline-block">
+                <span class="city-name">UEFA</span>
+                <span class="city-name">Turkish Airlines</span>
+                <span class="city-name">Pfizer</span>
+                <span class="city-name">FedEx</span>
+                <span class="city-name">Euroleague</span>
+                <span class="city-name">Ribbon</span>
+                <span class="city-name">Centrient</span>
+                <span class="city-name">Corden Pharma</span>
+                <span class="city-name">Radisys</span>
+                <span class="city-name">YPO</span>
+                <span class="city-name">Menzies</span>
+                <span class="city-name">Adevinta</span>
+                <span class="city-name">European Commission</span>
+                <span class="city-name">ISE</span>
+                <span class="city-name">Fiat</span>
+                <span class="city-name">VEEAM</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="spacer-lg"></div>
+
+    <!-- Value Proposition Section -->
+    <section class="value-prop-section">
+        <div class="value-prop-content-wrapper bg-dark">
+            <div class="container text-center">
+                <div class="text-mask-wrapper">
+                    <h2 class="masked-text display-2 fw-bold text-uppercase lh-1 mb-0">
+                        Designed<br>to be<br>remembered.
+                    </h2>
+                </div>
+                <div class="row justify-content-center mt-5 pt-5">
+                    <div class="col-md-8">
+                        <p class="lead text-white-50 fs-4 fw-light">
+                            From corporate summits to viral moments, we create experiences that fuel alignment
+                            and connection between audiences and business goals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="spacer-lg"></div>
+
+    <!-- Projects Section -->
+    <!-- Projects Section (Fullscreen Horizontal Slider) -->
+    <section class="projects-slider-section">
+        <div class="projects-track">
+            <!-- Slide 1: Midas ISE -->
+            <div class="project-slide">
+                <img src="https://cms.iventions.com/wp-content/uploads/2025/08/Midas-ISE-2025-2-scaled.jpg"
+                    alt="Midas ISE" class="project-slide-img">
+                <div class="project-slide-overlay">
+                    <div class="slide-content">
+                        <span class="slide-category">Exhibits</span>
+                        <h3 class="slide-title">Midas ISE</h3>
+                        <p class="slide-desc">Built to impress, designed to excite. A show-stopping stand for Midas at
+                            Integrated Systems Europe.</p>
+                        <a href="#" class="btn btn-cta rounded-pill mt-4">View Case</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Euroleague -->
+            <div class="project-slide">
+                <img src="https://cms.iventions.com/wp-content/uploads/2025/08/Basketball.jpg"
+                    alt="Euroleague Final Four" class="project-slide-img">
+                <div class="project-slide-overlay">
+                    <div class="slide-content">
+                        <span class="slide-category">Sports</span>
+                        <h3 class="slide-title">Euroleague Final Four</h3>
+                        <p class="slide-desc">Delivering the finest Middle East VIP hospitality for the biggest weekend
+                            of Europe’s basketball season.</p>
+                        <a href="#" class="btn btn-cta rounded-pill mt-4">View Case</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Adevinta -->
+            <div class="project-slide">
+                <img src="https://cms.iventions.com/wp-content/uploads/2025/08/Adevina-Ignite-2024-4-scaled.jpg"
+                    alt="Adevinta Ignite" class="project-slide-img">
+                <div class="project-slide-overlay">
+                    <div class="slide-content">
+                        <span class="slide-category">Events</span>
+                        <h3 class="slide-title">Adevinta Ignite</h3>
+                        <p class="slide-desc">Uniting a global team into one community through a transformative
+                            corporate event.</p>
+                        <a href="#" class="btn btn-cta rounded-pill mt-4">View Case</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Menzies -->
+            <div class="project-slide">
+                <img src="https://cms.iventions.com/wp-content/uploads/2025/07/Menzies-scaled.jpg"
+                    alt="Menzies Congress" class="project-slide-img">
+                <div class="project-slide-overlay">
+                    <div class="slide-content">
+                        <span class="slide-category">Congresses</span>
+                        <h3 class="slide-title">Menzies Congress</h3>
+                        <p class="slide-desc">A multi-day gathering of strategic inspiration and Catalan luxury for
+                            global leaders.</p>
+                        <a href="#" class="btn btn-cta rounded-pill mt-4">View Case</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section py-5 my-5">
+        <div class="container-fluid px-4 px-md-5">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <p class="text-uppercase small tracking-wide text-muted">What we do</p>
+                </div>
+            </div>
+
+            <!-- Service 1 -->
+            <div class="service-item border-top border-dark py-5">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <span class="h4 text-muted">01</span>
+                    </div>
+                    <div class="col-md-4">
+                        <h2 class="display-5 fw-bold mb-0 service-title">Events</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="lead fw-light mb-0">Global Events, Brand Activations, Experience Content. From
+                            corporate summits to viral moments, we create experiences that fuel alignment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-item border-top border-dark py-5">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <span class="h4 text-muted">02</span>
+                    </div>
+                    <div class="col-md-4">
+                        <h2 class="display-5 fw-bold mb-0 service-title">Exhibits</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="lead fw-light mb-0">Exhibitions, Trade Shows, Roadshows. Presence isn’t enough. We
+                            design modular brand spaces that speak, perform and stick.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-item border-top border-dark py-5">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <span class="h4 text-muted">03</span>
+                    </div>
+                    <div class="col-md-4">
+                        <h2 class="display-5 fw-bold mb-0 service-title">Congresses</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="lead fw-light mb-0">Congresses, Internal Meetings, Destination Management. We turn
+                            high-stakes gatherings into high-impact experiences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="service-item border-top border-bottom border-dark py-5">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <span class="h4 text-muted">04</span>
+                    </div>
+                    <div class="col-md-4">
+                        <h2 class="display-5 fw-bold mb-0 service-title">Sports</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="lead fw-light mb-0">Sponsorship, Activations, Venue Transformation. We build emotional
+                            power into every play.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5 bg-black text-white">
+        <div class="container-fluid px-4 px-md-5">
+            <div class="row mb-5">
+                <div class="col-12 mb-4">
+                    <img src="https://cms.iventions.com/wp-content/uploads/2025/07/footer-cert-new.png" alt="Certified"
+                        width="60" class="mb-5">
+                    <h2 class="display-1 fw-bold mb-5 footer-hero-text">Step into the<br>Spotlight</h2>
+                </div>
+            </div>
+
+            <div class="row g-5">
+                <!-- Address -->
+                <div class="col-md-4 col-lg-3">
+                    <p class="mb-1">Iventions International Events</p>
+                    <p class="mb-1">Av. Diagonal 433, 4-2</p>
+                    <p class="mb-4">Barcelona, Spain</p>
+                    <p class="mb-0">+34 933 028 640</p>
+                </div>
+
+                <!-- Explore Links -->
+                <div class="col-md-4 col-lg-3 offset-lg-3">
+                    <h5 class="text-uppercase small tracking-wide text-white-50 mb-4">Explore</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">Home</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">About</a>
+                        </li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">Events</a>
+                        </li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">Exhibits</a>
+                        </li>
+                        <li class="mb-2"><a href="#"
+                                class="text-white text-decoration-none fs-5 fw-light">Congresses</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">Sports</a>
+                        </li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">Work</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">Insights</a>
+                        </li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Connect Links -->
+                <div class="col-md-4 col-lg-3">
+                    <h5 class="text-uppercase small tracking-wide text-white-50 mb-4">Connect</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">LinkedIn</a>
+                        </li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none fs-5 fw-light">Instagram</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="border-secondary my-5">
+
+            <div class="row justify-content-between align-items-center small text-white-50">
+                <div class="col-md-auto mb-3 mb-md-0">
+                    <a href="#" class="text-white-50 text-decoration-none me-3">Cookie Policy</a>
+                    <a href="#" class="text-white-50 text-decoration-none me-3">Legal Notice & Terms of Use</a>
+                    <a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a>
+                </div>
+                <div class="col-md-auto">
+                    <span>Copyright © Iventions 2026</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>
