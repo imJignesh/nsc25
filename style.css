@@ -195,6 +195,10 @@ body {
     /* Pivot at the "mouth" hinge (center right) */
 }
 
+.onhover {
+    opacity: 0;
+}
+
 /* Stackable Card Styles */
 .stack-card-container {
     padding-bottom: 10vh;
@@ -263,7 +267,7 @@ body {
 /* Roadshow Styles */
 .roadshow-text {
     color: #000;
-    font-size: calc(1.2rem + 3vw);
+    font-size: calc(1rem + 1vw);
     line-height: 1;
     font-weight: 900;
     text-transform: uppercase;
@@ -705,4 +709,62 @@ footer {
 
 .impact-img-wrapper:hover {
     transform: scale(1.02);
+}
+
+/* Retrospective Section Interaction Styles */
+.retrospective-card {
+    transition: all 0.3s ease;
+}
+
+/* Ensure content stays on top and responds to color changes */
+.retrospective-content {
+    z-index: 2;
+    pointer-events: none;
+    /* Let mouse pass through to card for tracking */
+}
+
+/* Base state for text */
+.retrospective-content h4,
+.retrospective-content p {
+    transition: color 0.3s ease;
+}
+
+/* Reveal text on hover */
+.onhover {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+}
+
+.retrospective-card:hover .onhover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Invert colors on hover (when ball covers bg) */
+.retrospective-card:hover .retrospective-content h4 {
+    color: #fff !important;
+}
+
+.retrospective-card:hover .retrospective-content .text-muted {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Gooey Ball Background */
+/* Gooey Ball Background */
+.gooey-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    /* Large enough to cover card when scaled */
+    height: 500px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    /* Start hidden */
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform;
+    opacity: 1;
 }

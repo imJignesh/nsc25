@@ -307,3 +307,114 @@ if (impactSection && impactItems.length > 0 && impactTitle && impactText) {
         }
     }
 }
+
+// ----------------------------
+// RETROSPECTIVE CARDS INTERACTION
+// ----------------------------
+const retroCards = document.querySelectorAll(".retrospective-card");
+
+if (retroCards.length > 0) {
+    retroCards.forEach((card) => {
+        const gooeyBg = card.querySelector(".gooey-bg");
+        const heading = card.querySelector("h4");
+
+        if (gooeyBg && heading) {
+            // Calculate initial "Dot" position (to the left of the heading)
+            // We can't rely solely on offsetLeft if layout shifts, but for now we'll grab it once.
+            // Better to compute on hover-out or use a relative offset.
+
+            // Assuming p-5 (3rem = ~48px). We place dot slightly left of text start.
+            // Let's position it dynamically based on the heading's actual position
+            const updateDotPosition = () => {
+                const hRect = heading.getBoundingClientRect();
+                const cRect = card.getBoundingClientRect();
+                // Position: Left of text, vertically centered on the first line (approx)
+                return {
+                    x: (hRect.left - cRect.left) - 25, // 25px left of the heading text
+                    y: (hRect.top - cRect.top) + (hRect.height / 2) // Center vertically relative to heading block
+                };
+            };
+
+            // Initial Set
+            let dotPos = updateDotPosition();
+            gsap.set(gooeyBg, {
+                left: dotPos.x,
+                top: dotPos.y,
+                scale: 0.04, // Small dot (approx 32px if base is 800px)
+                height: 500, // Card size cover
+                width: 500,
+                xPercent: -50, // Center the div on the coordinate
+                yPercent: -50,
+                opacity: 1
+            });
+
+            // Mouse Enter: Expand Ball & Center
+            card.addEventListener("mouseenter", () => {
+                const rect = card.getBoundingClientRect();
+                gsap.to(gooeyBg, {
+                    scale: 1,
+                    left: rect.width / 2,
+                    top: rect.height / 2,
+                    duration: 0.6,
+                    ease: "power3.out",
+                    overwrite: true // Ensure we override any ongoing mousemove/leave tweens
+                });
+            });
+
+            // Mouse Leave: Shrink Ball back to Dot position
+            card.addEventListener("mouseleave", () => {
+                dotPos = updateDotPosition(); // Re-calc in case of resize/scroll shifts
+                gsap.to(gooeyBg, {
+                    scale: 0.04,
+                    left: dotPos.x,
+                    top: dotPos.y,
+                    duration: 0.5,
+                    ease: "power3.inOut",
+                    overwrite: true
+                });
+            });
+
+            // Mouse Move: Track Cursor with damping (Parallax effect)
+            // Use slower duration for "stickiness" feel
+            const xTo = gsap.quickTo ? gsap.quickTo(gooeyBg, "left", { duration: 0.8, ease: "power3" }) : null;
+            const yTo = gsap.quickTo ? gsap.quickTo(gooeyBg, "top", { duration: 0.8, ease: "power3" }) : null;
+
+            card.addEventListener("mousemove", (e) => {
+                const rect = card.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Move only 10% towards the mouse position from center to create "sticky center" effect
+                const targetX = centerX + (mouseX - centerX) * 0.1;
+                const targetY = centerY + (mouseY - centerY) * 0.1;
+
+                if (xTo && yTo) {
+                    xTo(targetX);
+                    yTo(targetY);
+                } else {
+                    gsap.to(gooeyBg, {
+                        left: targetX,
+                        top: targetY,
+                        duration: 0.8,
+                        ease: "power3",
+                        overwrite: "auto"
+                    });
+                }
+            });
+
+            // Handle Resize to keep dot in place
+            window.addEventListener('resize', () => {
+                dotPos = updateDotPosition();
+                // Only reset if not currently hovering? 
+                // For simplicity, we just update the stored pos, mouseleave will catch it.
+                // If we are NOT hovering, we should snap it.
+                if (!card.matches(':hover')) {
+                    gsap.set(gooeyBg, { left: dotPos.x, top: dotPos.y });
+                }
+            });
+        }
+    });
+}
