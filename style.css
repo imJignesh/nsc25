@@ -149,6 +149,52 @@ body {
     background: #7a1914;
 }
 
+#awards {
+    overflow: hidden !important;
+    /* We set max-height to 0 initially, but we remove the CSS transition so GSAP can handle it accurately with ScrollTrigger scrubbing */
+    max-height: 0;
+    will-change: max-height;
+    min-height: 300px !important
+}
+
+#awards-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+    /* Let clicks pass through if needed, though visually it covers */
+}
+
+.jaw-upper,
+.jaw-lower {
+    position: absolute;
+    right: -50%;
+    /* Align to right */
+    width: 200%;
+    height: 100%;
+    /* Slight overlap to prevent gap line */
+    background-color: var(--primary-color);
+    /* Match page background */
+    z-index: 11;
+    transform-origin: 100% bottom;
+    /* Default pivot */
+}
+
+.jaw-upper {
+    top: 0;
+    transform-origin: bottom 100%;
+    /* Pivot at the "mouth" hinge (center right) */
+}
+
+.jaw-lower {
+    bottom: 0;
+    transform-origin: top right;
+    /* Pivot at the "mouth" hinge (center right) */
+}
+
 /* Stackable Card Styles */
 .stack-card-container {
     padding-bottom: 10vh;
@@ -291,7 +337,7 @@ body {
 }
 
 .award-list-item {
-    padding: 1.5rem 0;
+    padding: 1rem 0;
     border-bottom: 1px solid #eee;
 }
 
@@ -630,4 +676,33 @@ footer {
 .hero-goo-svg {
     width: 100%;
     height: 100%;
+}
+
+/* Impact Section Interaction Styles */
+#impact .impact-dynamic-title {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+#impact .impact-dynamic-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.impact-overlay {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+}
+
+.impact-number {
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.impact-img-wrapper {
+    transition: transform 0.5s ease;
+}
+
+.impact-img-wrapper:hover {
+    transform: scale(1.02);
 }

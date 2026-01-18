@@ -346,18 +346,20 @@
 
     <!-- Section 6: Award Spotlight (Full Content Restored) -->
     <section id="awards" class=" d-flex align-items-center bg-white border-bottom position-relative">
+        <div id="awards-overlay">
+            <div class="jaw-upper"></div>
+            <div class="jaw-lower"></div>
+        </div>
         <div class="bg-light w-100">
             <div class="container py-5">
-                <div class="row align-items-start">
+                <div class="row align-items-center">
                     <!-- Left Column -->
-                    <div class="col-lg-5 mb-5 mb-lg-0">
+                    <div class="col-lg-4 mb-5 mb-lg-0">
 
-                        <h2 class=" fw-bold text-uppercase ls-tight mb-4">The 4th Edition of Nasscom SME Inspire
-                            Awards</h2>
-                        <img src="assets/awards/trophy.png" alt="Inspire Awards"
-                            class="img-fluid w-100 h-100 object-fit-cover">
+                        <img src="assets/awards/trophy.png" style="max-width: 200px; margin: 0 auto;"
+                            alt="Inspire Awards" class="img-fluid w-100 h-100 object-fit-cover d-block">
 
-                        <div class="mt-5">
+                        <div class="mt-1 text-center">
                             <a href="#" class="btn btn-dark rounded-0 px-5 py-3 fw-bold">APPLY NOW</a>
                             <p class="text-muted mb-0">
                                 For queries, write to <strong>smeinspire@nasscom.in</strong>
@@ -370,8 +372,11 @@
                     </div>
 
                     <!-- Right Column (List items) -->
-                    <div class="col-lg-6 offset-lg-1 border-start border-dark ps-lg-5">
+                    <div class="col-lg-8  border-start border-dark ps-lg-5">
 
+                        <h2 class="text-left fw-bold text-uppercase ls-tight mb-1">The 4th Edition of Nasscom SME
+                            Inspire
+                            Awards</h2>
                         <div class="award-list-item">
                             <h5 class="fw-bold text-uppercase mb-2">Programme Overview</h5>
                             <p class="text-muted mb-0">
@@ -382,7 +387,7 @@
                         </div>
 
                         <div class="award-list-item">
-                            <h5 class="fw-bold text-uppercase mb-2">Segmented by Scale</h5>
+                            <h5 class="fw-bold text-uppercase mb-1">Segmented by Scale</h5>
                             <p class="text-muted mb-0">
                                 Award categories structured across two turnover-based segments to ensure fair
                                 representation:
@@ -392,17 +397,17 @@
                         </div>
 
                         <div class="award-list-item">
-                            <h5 class="fw-bold text-uppercase mb-2">Categories of Excellence</h5>
+                            <h5 class="fw-bold text-uppercase mb-1">Categories of Excellence</h5>
                             <p class="text-muted mb-0">
-                                Recognition across three core dimensions:
-                                <br>Business Excellence Awards
-                                <br>Technology Excellence Awards
-                                <br>Special Recognition Awards
+                                Recognition across three core dimensions:<br />
+                                Business Excellence Awards
+                                | Technology Excellence Awards
+                                | Special Recognition Awards
                             </p>
                         </div>
 
                         <div class="award-list-item">
-                            <h5 class="fw-bold text-uppercase mb-2">Additional Sector Recognition</h5>
+                            <h5 class="fw-bold text-uppercase mb-1">Additional Sector Recognition</h5>
                             <p class="text-muted mb-0">
                                 Two exclusive awards for SMEs from the manufacturing and services sectors, recognising
                                 excellence in technology implementation initiatives.
@@ -420,91 +425,115 @@
 
     <!-- Section 7: Impact Momentum -->
     <section id="impact" class="py-5 bg-white border-bottom">
-        <div class="container py-5 text-center">
-            <h2 class="display-4 fw-bold text-uppercase ls-tight mb-5">The Momentum So Far</h2>
+        <div class="container py-5">
+            <h2 class="display-4 fw-bold text-uppercase ls-tight mb-5 text-center">The Momentum So Far</h2>
 
+            <div class="row">
+                <!-- Left Column: Sticky Title -->
+                <div class="col-lg-3 d-none d-lg-block">
+                    <div class="impact-sticky-left w-100 text-end pe-4"
+                        style="position: sticky; top: 50vh; transform: translateY(-50%);">
+                        <h5 class="fw-bold text-uppercase mb-0 impact-dynamic-title"
+                            style="transition: opacity 0.3s ease;">Attendees Reached</h5>
+                    </div>
+                </div>
 
-            <div class="momentum-wrapper text-start">
+                <!-- Middle Column: Scrollable Images -->
+                <div class="col-lg-6">
+                    <div class="impact-scroll-container">
 
-                <div class="momentum-item bg-white p-5 mb-5 rounded-5 shadow-lg border-0">
-                    <div class="container">
-                        <div class="row align-items-center g-5">
-                            <div class="col-md-5">
-                                <span class="display-3 fw-black ls-tight d-block mb-2">750+</span>
-                                <h5 class="fw-bold text-uppercase mb-3">Attendees Reached</h5>
-                                <p class="text-muted mb-0">
-                                    The total number of delegates at the flagship 2025 Confluence, representing the core
-                                    of India's tech SME sector.
-                                </p>
-                            </div>
-                            <div class="col-md-7">
+                        <!-- Item 1 -->
+                        <div class="impact-image-item position-relative mb-5" data-index="0">
+                            <div class="impact-img-wrapper rounded-5 overflow-hidden shadow-lg position-relative">
                                 <img src="assets/momentum/attendees-reached.png" alt="Attendees Reached"
-                                    class="img-fluid rounded-4 shadow-sm w-100 object-fit-cover" style="height: 300px;">
+                                    class="img-fluid w-100 object-fit-cover" style="min-height: 400px;">
+                                <div class="impact-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-25"
+                                    style="opacity: 0; transition: opacity 0.5s ease;">
+                                    <span class="impact-number display-1 fw-black text-white ls-tight"
+                                        style="transform: translateY(20px); transition: transform 0.5s ease;">750+</span>
+                                </div>
+                            </div>
+                            <!-- Data for JS updates -->
+                            <div class="d-none impact-data-source">
+                                <span class="data-title">Attendees Reached</span>
+                                <span class="data-text">The total number of delegates at the flagship 2025 Confluence,
+                                    representing the core of India's tech SME sector.</span>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="momentum-item bg-white p-5 mb-5 rounded-5 shadow-lg border-0">
-                    <div class="container">
-                        <div class="row align-items-center g-5">
-                            <div class="col-md-5">
-                                <span class="display-3 fw-black ls-tight d-block mb-2">70+</span>
-                                <h5 class="fw-bold text-uppercase mb-3">Global Speakers</h5>
-                                <p class="text-muted mb-0">
-                                    Including ambassadors, policy-makers, and industry veterans sharing actionable
-                                    insights.
-                                </p>
-                            </div>
-                            <div class="col-md-7">
+                        <!-- Item 2 -->
+                        <div class="impact-image-item position-relative mb-5" data-index="1">
+                            <div class="impact-img-wrapper rounded-5 overflow-hidden shadow-lg position-relative">
                                 <img src="assets/momentum/speakers.png" alt="Global Speakers"
-                                    class="img-fluid rounded-4 shadow-sm w-100 object-fit-cover" style="height: 300px;">
+                                    class="img-fluid w-100 object-fit-cover" style="min-height: 400px;">
+                                <div class="impact-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-25"
+                                    style="opacity: 0; transition: opacity 0.5s ease;">
+                                    <span class="impact-number display-1 fw-black text-white ls-tight"
+                                        style="transform: translateY(20px); transition: transform 0.5s ease;">70+</span>
+                                </div>
+                            </div>
+                            <div class="d-none impact-data-source">
+                                <span class="data-title">Global Speakers</span>
+                                <span class="data-text">Including ambassadors, policy-makers, and industry veterans
+                                    sharing actionable insights.</span>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="momentum-item bg-white p-5 mb-5 rounded-5 shadow-lg border-0">
-                    <div class="container">
-                        <div class="row align-items-center g-5">
-                            <div class="col-md-5">
-                                <span class="display-3 fw-black ls-tight d-block mb-2">3.5K+</span>
-                                <h5 class="fw-bold text-uppercase mb-3">Member Companies</h5>
-                                <p class="text-muted mb-0">
-                                    Our powerful community representing the breadth of India’s tech ecosystem.
-                                </p>
-                            </div>
-                            <div class="col-md-7">
+                        <!-- Item 3 -->
+                        <div class="impact-image-item position-relative mb-5" data-index="2">
+                            <div class="impact-img-wrapper rounded-5 overflow-hidden shadow-lg position-relative">
                                 <img src="assets/momentum/member-companies.png" alt="Member Companies"
-                                    class="img-fluid rounded-4 shadow-sm w-100 object-fit-cover" style="height: 300px;">
+                                    class="img-fluid w-100 object-fit-cover" style="min-height: 400px;">
+                                <div class="impact-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-25"
+                                    style="opacity: 0; transition: opacity 0.5s ease;">
+                                    <span class="impact-number display-1 fw-black text-white ls-tight"
+                                        style="transform: translateY(20px); transition: transform 0.5s ease;">3.5K+</span>
+                                </div>
+                            </div>
+                            <div class="d-none impact-data-source">
+                                <span class="data-title">Member Companies</span>
+                                <span class="data-text">Our powerful community representing the breadth of India’s tech
+                                    ecosystem.</span>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="momentum-item bg-white p-5 mb-5 rounded-5 shadow-lg border-0">
-                    <div class="container">
-                        <div class="row align-items-center g-5">
-                            <div class="col-md-5">
-                                <span class="display-3 fw-black ls-tight d-block mb-2">30+</span>
-                                <h5 class="fw-bold text-uppercase mb-3">Strategic Sessions</h5>
-                                <p class="text-muted mb-0">
-                                    Deep dives into AI, global trade, and digital transformation.
-                                </p>
-                            </div>
-                            <div class="col-md-7">
+                        <!-- Item 4 -->
+                        <div class="impact-image-item position-relative mb-5" data-index="3">
+                            <div class="impact-img-wrapper rounded-5 overflow-hidden shadow-lg position-relative">
                                 <img src="assets/momentum/strategic-sessions.png" alt="Strategic Sessions"
-                                    class="img-fluid rounded-4 shadow-sm w-100 object-fit-cover" style="height: 300px;">
+                                    class="img-fluid w-100 object-fit-cover" style="min-height: 400px;">
+                                <div class="impact-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-25"
+                                    style="opacity: 0; transition: opacity 0.5s ease;">
+                                    <span class="impact-number display-1 fw-black text-white ls-tight"
+                                        style="transform: translateY(20px); transition: transform 0.5s ease;">30+</span>
+                                </div>
+                            </div>
+                            <div class="d-none impact-data-source">
+                                <span class="data-title">Strategic Sessions</span>
+                                <span class="data-text">Deep dives into AI, global trade, and digital
+                                    transformation.</span>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
+                <!-- Right Column: Sticky Text -->
+                <div class="col-lg-3 d-none d-lg-block">
+                    <div class="impact-sticky-right w-100 text-start ps-4"
+                        style="position: sticky; top: 50vh; transform: translateY(-50%);">
+                        <p class="text-muted mb-0 impact-dynamic-text" style="transition: opacity 0.3s ease;">The total
+                            number of delegates at the flagship 2025 Confluence, representing the core of India's tech
+                            SME sector.</p>
+                    </div>
+                </div>
             </div>
-
-
-
         </div>
+    </section>
+
+
+
+    </div>
     </section>
 
     <!-- Section 8: Retrospective -->

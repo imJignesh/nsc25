@@ -58,15 +58,29 @@ window.addEventListener("load", () => ScrollTrigger.refresh());
 // HERO 3D TILT EFFECT
 // ----------------------------
 const heroClipContainer = document.querySelector(".hero-clip-container");
+const tiltState = { intensity: 1 }; // State to control tilt strength
 
 if (heroSection && heroVideo && heroClipContainer) {
+
+    // Dampen tilt as user scrolls down
+    ScrollTrigger.create({
+        trigger: heroSection,
+        start: "top top",
+        end: "+=50%",
+        scrub: true,
+        onUpdate: (self) => {
+            // self.progress goes from 0 to 1. We want intensity 1 to 0.
+            tiltState.intensity = 1 - self.progress;
+        }
+    });
+
     window.addEventListener("mousemove", (e) => {
         const xPos = (e.clientX / window.innerWidth) - 0.5;
         const yPos = (e.clientY / window.innerHeight) - 0.5;
 
         // Animate Clip Container (Tilt A)
         gsap.to(heroClipContainer, {
-            rotation: xPos * 10,  // Max 5 degrees tilt
+            rotation: xPos * 10 * tiltState.intensity,  // Multiply by intensity
             scale: 1.03, // Inverted Y axis for natural feel
             transformPerspective: 1000,
             transformOrigin: "center center",
@@ -76,8 +90,8 @@ if (heroSection && heroVideo && heroClipContainer) {
 
         // Animate Video Element (Tilt B - Opposite Direction)
         gsap.to(heroVideo, {
-            rotationY: -xPos * 10,
-            rotationX: yPos * 10,
+            rotationY: -xPos * 10 * tiltState.intensity, // Multiply by intensity
+            rotationX: yPos * 10 * tiltState.intensity,
             transformPerspective: 1000,
             transformOrigin: "center center",
             ease: "power1.out",
@@ -181,4 +195,115 @@ if (stackCards.length > 0) {
             });
         }
     });
+}
+
+// ----------------------------
+// AWARDS REVEAL ANIMATION
+// ----------------------------
+const awardsSection = document.querySelector("#awards");
+const awardsOverlay = document.querySelector("#awards-overlay");
+const jawUpper = document.querySelector(".jaw-upper");
+const jawLower = document.querySelector(".jaw-lower");
+
+if (awardsSection && jawUpper && jawLower) {
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: awardsSection,
+            start: "center bottom", // Starts when top of awards hits bottom of viewport
+            end: "center top-=200", // Ends when center of awards hits center of viewport
+            scrub: 1,
+            // markers: true
+        }
+    });
+
+    // 1. Expand Height from 0 to auto (approx 100vh or intrinsic height)
+    // using max-height for smooth transition from 0 
+    tl.to(awardsSection, {
+        maxHeight: "150vh", // Use a value large enough to fit content
+        duration: 2.5,
+        ease: "power1.inOut",
+        onUpdate: () => ScrollTrigger.refresh() // Recalculate layout continuously as height changes
+    })
+        // 2. Open the Jaws (Pacman Reveal)
+        .to([jawUpper], {
+            rotation: -90, // Rotate up-left
+            // autoAlpha: 0, // Keep opacity full to see the "red" jaws rotate out
+            duration: 5,
+            // delay: 1,
+            ease: "power1.inOut"
+        }, "<") // Start simultaneously with height expansion
+        .to([jawLower], {
+            rotation: 90, // Rotate down-left
+            // autoAlpha: 0,
+            duration: 5,
+            // delay: 1,
+            ease: "power1.inOut"
+        }, "<");
+}
+
+// ----------------------------
+// IMPACT SECTION INTERACTION
+// ----------------------------
+const impactSection = document.querySelector("#impact");
+const impactItems = document.querySelectorAll(".impact-image-item");
+const impactTitle = document.querySelector(".impact-dynamic-title");
+const impactText = document.querySelector(".impact-dynamic-text");
+
+if (impactSection && impactItems.length > 0 && impactTitle && impactText) {
+
+    impactItems.forEach((item, index) => {
+        const overlay = item.querySelector(".impact-overlay");
+        const numberEl = item.querySelector(".impact-number");
+
+        // Get data from hidden source
+        const dataSource = item.querySelector(".impact-data-source");
+        const titleData = dataSource ? dataSource.querySelector(".data-title").innerText : "";
+        const textData = dataSource ? dataSource.querySelector(".data-text").innerText : "";
+
+        ScrollTrigger.create({
+            trigger: item,
+            start: "top center+=100", // Activate when item hits center-ish
+            end: "bottom center+=100",
+            onEnter: () => updateImpactState(item, titleData, textData),
+            onEnterBack: () => updateImpactState(item, titleData, textData),
+            onLeave: () => hideOverlay(item),
+            onLeaveBack: () => hideOverlay(item),
+            invalidateOnRefresh: true // Recalculate positions if page resizes or previous triggers refresh
+        });
+    });
+
+    function updateImpactState(activeItem, title, text) {
+        // Update Sticky Text with a quick fade transition
+        // Fade Out
+        gsap.to([impactTitle, impactText], {
+            opacity: 0,
+            duration: 0.15,
+            onComplete: () => {
+                // Change Text
+                impactTitle.innerText = title;
+                impactText.innerText = text;
+                // Fade In
+                gsap.to([impactTitle, impactText], { opacity: 1, duration: 0.15 });
+            }
+        });
+
+        // Show Overlay on Active Image
+        const overlay = activeItem.querySelector(".impact-overlay");
+        const number = activeItem.querySelector(".impact-number");
+
+        if (overlay && number) {
+            gsap.to(overlay, { opacity: 1, duration: 0.3 });
+            gsap.fromTo(number,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.7)" }
+            );
+        }
+    }
+
+    function hideOverlay(item) {
+        const overlay = item.querySelector(".impact-overlay");
+        if (overlay) {
+            gsap.to(overlay, { opacity: 0, duration: 0.3 });
+        }
+    }
 }
