@@ -9,10 +9,10 @@
     --card-bg: #FFFFFF;
 
     /* Decoration */
-    --radius-sm: 8px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
-    --radius-xl: 32px;
+    --radius-sm: 10px;
+    --radius-md: 10px;
+    --radius-lg: 10px;
+    --radius-xl: 10px;
 
     /* Shadows */
     --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.02);
@@ -334,10 +334,14 @@ body {
 .speaker-card {
     border: 1px solid #eee;
     transition: all 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .speaker-card:hover {
     border-color: #000;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    /* Small shadow effect */
 }
 
 .award-list-item {
@@ -496,6 +500,24 @@ footer {
 
 }
 
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    max-width: 200px;
+    display: block;
+}
+
+.navbar-brand img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 .speakers img {
     width: 100%;
@@ -520,6 +542,7 @@ footer {
 /* Enhancing Pricing Cards */
 .pricing-section__card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 1rem;
 }
 
 .pricing-section__card:hover {
@@ -529,18 +552,29 @@ footer {
 
 /* Sponsor Section Styles */
 .sponsor-logo {
-    max-width: 180px;
+    max-width: 240px;
+    /* Made bigger */
+    width: 100%;
     height: auto;
-    filter: grayscale(100%);
+
     transition: all 0.3s ease;
-    opacity: 0.7;
-    mix-blend-mode: multiply;
+    opacity: 1;
+    margin: 0 auto;
+
+    /* Shadowed Border Card Style */
+    background: #ffffff;
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
 }
 
 .sponsor-logo:hover {
     filter: grayscale(0%);
     opacity: 1;
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.2);
 }
 
 .sponsor-category-title {
@@ -697,10 +731,12 @@ footer {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(2px);
     pointer-events: none;
+    font-weight: bold;
 }
 
 .impact-number {
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
 }
 
 .impact-img-wrapper {
@@ -767,4 +803,28 @@ footer {
     z-index: 1;
     will-change: transform;
     opacity: 1;
+}
+
+/* Roadshow Section Updates */
+.roadshow-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    opacity: 0.4;
+    /* Dim by default */
+}
+
+.roadshow-item:hover,
+.roadshow-item.active {
+    background-color: #f8f9fa;
+    padding-left: 2rem !important;
+    border-left: 4px solid var(--primary-color);
+    opacity: 1;
+    /* Highlight */
+}
+
+/* Ensure images don't overflow roundness */
+#roadshow-image-container {
+    transform: translateZ(0);
+    /* Hardware accel for rounding */
 }

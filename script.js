@@ -170,6 +170,45 @@ const stackCards = document.querySelectorAll(".stack-card");
 
 if (stackCards.length > 0) {
     stackCards.forEach((card, index) => {
+        // ENTRANCE ANIMATION (Curtain Reveal)
+        const imgWrapper = card.querySelector(".ratio");
+        const img = card.querySelector("img");
+
+        if (imgWrapper && img) {
+            // Initial states
+            // Clip from right to left (Curtain opens left to right?)
+            // Let's do a center-out reveal or simple wipe.
+            // Simple wipe from bottom: inset(0 0 100% 0) -> inset(0 0 0% 0)
+
+            // Set initial state immediately to avoid flashing
+            gsap.set(imgWrapper, { clipPath: "inset(0 0 100% 0)" });
+            gsap.set(img, { scale: 1.4 });
+
+            gsap.to(imgWrapper, {
+                clipPath: "inset(0 0 0% 0)",
+                duration: 1.2,
+                ease: "power4.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%", // When card top hits 85% of viewport (almost entering)
+                    end: "top 60%", // Short scrub or just play? Let's play trigger.
+                    toggleActions: "play none none reverse"
+                }
+            });
+
+            gsap.to(img, {
+                scale: 1,
+                duration: 1.4,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        }
+
+        // EXIT ANIMATION (Stacking Effect)
         // We only animate the card if there is a next card to cover it
         // The last card just stays sticky or scrolls up naturally
         if (index < stackCards.length - 1) {
@@ -220,7 +259,7 @@ if (awardsSection && jawUpper && jawLower) {
     // using max-height for smooth transition from 0 
     tl.to(awardsSection, {
         maxHeight: "150vh", // Use a value large enough to fit content
-        duration: 2.5,
+        duration: 5,
         ease: "power1.inOut",
         onUpdate: () => ScrollTrigger.refresh() // Recalculate layout continuously as height changes
     })
@@ -228,14 +267,14 @@ if (awardsSection && jawUpper && jawLower) {
         .to([jawUpper], {
             rotation: -90, // Rotate up-left
             // autoAlpha: 0, // Keep opacity full to see the "red" jaws rotate out
-            duration: 5,
+            duration: 10,
             // delay: 1,
             ease: "power1.inOut"
         }, "<") // Start simultaneously with height expansion
         .to([jawLower], {
             rotation: 90, // Rotate down-left
             // autoAlpha: 0,
-            duration: 5,
+            duration: 10,
             // delay: 1,
             ease: "power1.inOut"
         }, "<");
@@ -418,3 +457,135 @@ if (retroCards.length > 0) {
         }
     });
 }
+
+
+// ----------------------------
+// ROADSHOW SECTION INTERACTION
+// ----------------------------
+const roadshowItems = document.querySelectorAll('.roadshow-item');
+const roadshowImages = document.querySelectorAll('.roadshow-img');
+
+if (roadshowItems.length > 0 && roadshowImages.length > 0) {
+    // Set initial state
+    gsap.set(roadshowImages, { opacity: 0, scale: 1.1 });
+
+    function updateRoadshowState(targetId) {
+        // 1. Highlight List Item
+        roadshowItems.forEach(item => {
+            if (item.getAttribute('data-target') === targetId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
+        // 2. Show Image
+        const activeImg = document.querySelector(`.roadshow-img[data-city="${targetId}"]`);
+
+        if (activeImg) {
+            // Animate others out
+            roadshowImages.forEach(img => {
+                if (img !== activeImg) {
+                    gsap.to(img, { opacity: 0, duration: 0.3, overwrite: true });
+                }
+            });
+
+            // Animate active in
+            gsap.to(activeImg, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.6,
+                ease: "power2.out",
+                overwrite: true
+            });
+        }
+    }
+
+    // Create ScrollTriggers for each item
+    roadshowItems.forEach((item, index) => {
+        ScrollTrigger.create({
+            trigger: item,
+            start: "top 60%",  // Trigger when item is near center
+            end: "bottom 40%",
+            onEnter: () => updateRoadshowState(item.getAttribute('data-target')),
+            onEnterBack: () => updateRoadshowState(item.getAttribute('data-target')),
+            // Optional: Set first one active initially if needed, 
+            // but ScrollTrigger usually catches it on load if it's in view
+        });
+    });
+}
+
+
+// ----------------------------
+// GENERIC 3D TILT INTERACTION (SECTION BASED)
+// ----------------------------
+function addSectionTiltEffect(sectionSelector, targetSelector, intensity = 20) {
+    const section = document.querySelector(sectionSelector);
+    if (!section) return;
+
+    const targets = section.querySelectorAll(targetSelector);
+    if (targets.length === 0) return;
+
+    // Setup initial Transform Perspective on targets
+    targets.forEach(el => {
+        gsap.set(el, { transformPerspective: 1000, transformStyle: "preserve-3d" });
+    });
+
+    // We'll store quickTo functions for each element to ensure performance
+    // Map: element -> { xTo, yTo }
+    const animations = new Map();
+    targets.forEach(el => {
+        animations.set(el, {
+            xTo: gsap.quickTo(el, "rotationY", { duration: 0.8, ease: "power3" }),
+            yTo: gsap.quickTo(el, "rotationX", { duration: 0.8, ease: "power3" })
+        });
+    });
+
+    section.addEventListener("mousemove", (e) => {
+        targets.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            // Check if element is in viewport roughly to avoid calc on off-screen elements? 
+            // For now, just calc all.
+
+            const width = rect.width;
+            const height = rect.height;
+
+            // Mouse relative to the Element Center
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            // Calculate -1 to 1 range relative to element dimensions
+            // Valid even if mouse is outside the element (will be > 1 or < -1)
+            const xPct = (mouseX / width - 0.5) * 2;
+            const yPct = (mouseY / height - 0.5) * 2;
+
+            // Apply Tilt
+            // Distance attenuation? (Optional: Clamp or reduce intensity if far away)
+            // For now, linear tilt based on position relative to card center.
+            const anim = animations.get(el);
+            if (anim) {
+                anim.xTo(xPct * intensity);
+                anim.yTo(-yPct * intensity);
+            }
+        });
+    });
+
+    section.addEventListener("mouseleave", () => {
+        targets.forEach(el => {
+            const anim = animations.get(el);
+            if (anim) {
+                anim.xTo(0);
+                anim.yTo(0);
+            }
+        });
+    });
+}
+
+// Apply to requested sections
+// 1. Roadshow Images
+addSectionTiltEffect("#roadshows", "#roadshow-image-container", 5);
+
+// 2. Momentum Images
+addSectionTiltEffect("#impact", ".impact-img-wrapper", 5);
+
+
