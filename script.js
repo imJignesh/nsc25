@@ -192,8 +192,8 @@ if (stackCards.length > 0) {
                 ease: "power4.out",
                 scrollTrigger: {
                     trigger: card,
-                    start: "top 85%", // When card top hits 85% of viewport (almost entering)
-                    end: "top 60%", // Short scrub or just play? Let's play trigger.
+                    start: "top 60%", // Delayed: When card top hits 60% of viewport
+                    end: "top 40%",
                     toggleActions: "play none none reverse"
                 }
             });
@@ -204,7 +204,7 @@ if (stackCards.length > 0) {
                 ease: "power2.out",
                 scrollTrigger: {
                     trigger: card,
-                    start: "top 85%",
+                    start: "top 60%", // Match above
                     toggleActions: "play none none reverse"
                 }
             });
@@ -657,6 +657,55 @@ window.addEventListener("load", () => {
                 overwrite: true,
                 force3D: true
             });
+        }
+    });
+});
+
+// ----------------------------
+// NAVBAR GLASS TOGGLE
+// ----------------------------
+const navbar = document.querySelector(".navbar");
+
+if (navbar) {
+    ScrollTrigger.create({
+        start: "top top",
+        end: 99999, // Run indefinitely
+        onUpdate: (self) => {
+            // "Half section" logic: Approx 50vh or just entering the next content.
+            // Let's use 50vh as a reasonable "half section" threshold.
+            if (self.scroll() > window.innerHeight / 2) {
+                if (!navbar.classList.contains("glass")) {
+                    navbar.classList.add("glass");
+                }
+            } else {
+                if (navbar.classList.contains("glass")) {
+                    navbar.classList.remove("glass");
+                }
+            }
+        }
+    });
+}
+
+
+// ----------------------------
+// SMOOTH ANCHOR SCROLLING
+// ----------------------------
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#' || targetId === '') return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            // Use Lenis for smooth scroll if available, otherwise fallback
+            if (typeof lenis !== 'undefined' && lenis) {
+                lenis.scrollTo(targetElement);
+            } else {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         }
     });
 });

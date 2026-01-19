@@ -289,9 +289,13 @@ body {
     border-bottom: none;
 }
 
+#confluence {
+    min-height: 300px;
+}
+
 /* Confluence Styles */
 .confluence-city-block {
-    padding: 10vh 0;
+    padding: 10px 0;
     border-bottom: 1px solid #eee;
 }
 
@@ -607,6 +611,25 @@ footer {
     margin: 10px auto 0;
 }
 
+.mil-hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.mil-hero-video canvas {
+    width: 100%;
+    height: 100%;
+    transform: translateY(0%) translateX(40%) scale(1.5);
+}
+
+.text-primary {
+    color: #a3221b !important;
+}
+
 /* Micro-interactions & Animations */
 /* .hover-card {
     transition: all var(--transition-fast);
@@ -635,6 +658,16 @@ footer {
 
 .nav-item {
     font-size: 14px;
+}
+
+
+/* Navbar Glass Effect */
+.navbar.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 /* Soft section separators */
