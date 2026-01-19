@@ -25,6 +25,10 @@
     --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+a {
+    color: #a3221b;
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -672,8 +676,34 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.nav-item {
-    font-size: 14px;
+.mil-social {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mil-social li {
+    margin-bottom: 12px;
+}
+
+.mil-social a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.mil-social a svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.mil-social a:hover {
+    color: var(--primary-color);
 }
 
 

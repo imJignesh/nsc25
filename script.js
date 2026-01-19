@@ -14,15 +14,53 @@ gsap.ticker.add((time) => {
 gsap.ticker.lagSmoothing(0);
 
 // ----------------------------
-// HERO VIDEO ANIMATION
+// GLOBAL UTILITIES & REFRESH
+// ----------------------------
+const refreshAll = () => {
+    ScrollTrigger.refresh();
+};
+window.addEventListener("load", () => {
+    // If we loaded at a hash, scroll there with Lenis
+    if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+            lenis.scrollTo(target, { immediate: true });
+        }
+    }
+    setTimeout(refreshAll, 100);
+});
+window.addEventListener("resize", refreshAll);
+window.addEventListener("hashchange", refreshAll);
+
+// Handle anchor links smoothly
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+            lenis.scrollTo(target, {
+                offset: 0,
+                duration: 1.5,
+                onComplete: () => {
+                    refreshAll();
+                }
+            });
+            // Update URL hash without jumping
+            history.pushState(null, null, targetId);
+        }
+    });
+});
+
+// ----------------------------
+// HERO & FIXED ELEMENTS
 // ----------------------------
 const heroSection = document.querySelector("#hero");
 const heroVideo = document.querySelector("#hero-video");
 const heroRectEl = document.querySelector("#hero-rect");
 
 if (heroSection && heroVideo && heroRectEl) {
-
-    // Helper to get current rect
     const getRect = () => heroRectEl.getBoundingClientRect();
 
     gsap.fromTo(heroVideo,
@@ -38,9 +76,8 @@ if (heroSection && heroVideo && heroRectEl) {
             top: 0,
             width: "100vw",
             height: "100vh",
-            borderRadius: "0px", // Optional: smoothly remove radius
+            borderRadius: "0px",
             ease: "none",
-            aspectRatio: "auto",
             scrollTrigger: {
                 trigger: heroSection,
                 start: "top top",
@@ -50,10 +87,29 @@ if (heroSection && heroVideo && heroRectEl) {
             },
         }
     );
+
+    // PERFORMANCE: Hide fixed parts of hero when scrolled past
+    const fixedHeroBody = heroSection.querySelector('.container-fluid.position-fixed');
+    if (fixedHeroBody) {
+        ScrollTrigger.create({
+            trigger: heroSection,
+            start: "bottom top",
+            onEnter: () => gsap.set(fixedHeroBody, { visibility: "hidden" }),
+            onLeaveBack: () => gsap.set(fixedHeroBody, { visibility: "visible" })
+        });
+    }
 }
 
-// Ensure ScrollTrigger refreshes after load to catch correct positions
-window.addEventListener("load", () => ScrollTrigger.refresh());
+const highlightsSection = document.querySelector("#highlights");
+const highlightsPin = document.querySelector("#highlights-pin");
+if (highlightsSection && highlightsPin) {
+    ScrollTrigger.create({
+        trigger: highlightsSection,
+        start: "bottom top",
+        onEnter: () => gsap.set(highlightsPin, { visibility: "hidden" }),
+        onLeaveBack: () => gsap.set(highlightsPin, { visibility: "visible" })
+    });
+}
 
 // ----------------------------
 // HERO 3D TILT EFFECT
@@ -133,8 +189,44 @@ if (blueprintItems.length > 0 && blueprintIcons.length > 0) {
     gsap.set(blueprintIcons[0], { autoAlpha: 1, scale: 1 });
     blueprintItems[0].classList.add('active');
 
+    // PERFORMANCE: Hide icons when section is passed
+    const blueprintSection = document.querySelector("#blueprint");
+    const iconsHolder = document.querySelector(".icons-holder");
+    if (blueprintSection && iconsHolder) {
+        ScrollTrigger.create({
+            trigger: blueprintSection,
+            start: "bottom top",
+            onEnter: () => gsap.set(iconsHolder, { visibility: "hidden" }),
+            onLeaveBack: () => gsap.set(iconsHolder, { visibility: "visible" })
+        });
+    }
+
     let currentActiveIndex = 0;
     const stickyPosition = window.innerHeight * 0.4; // 40vh sticky position
+    let ticking = false; // Throttle flag
+
+    const checkBlueprint = () => {
+        // Find which item is closest to the sticky position
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
+        blueprintItems.forEach((item, index) => {
+            const rect = item.getBoundingClientRect();
+            const itemCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(itemCenter - stickyPosition);
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
+            }
+        });
+
+        // Only update if the active item has changed
+        if (closestIndex !== currentActiveIndex) {
+            currentActiveIndex = closestIndex;
+            updateBlueprintState(closestIndex);
+        }
+    };
 
     // Create a single ScrollTrigger that continuously monitors scroll position
     ScrollTrigger.create({
@@ -142,28 +234,19 @@ if (blueprintItems.length > 0 && blueprintIcons.length > 0) {
         start: "top bottom",
         end: "bottom top",
         onUpdate: (self) => {
-            // Find which item is closest to the sticky position
-            let closestIndex = 0;
-            let closestDistance = Infinity;
-
-            blueprintItems.forEach((item, index) => {
-                const rect = item.getBoundingClientRect();
-                const itemCenter = rect.top + rect.height / 2;
-                const distance = Math.abs(itemCenter - stickyPosition);
-
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestIndex = index;
-                }
-            });
-
-            // Only update if the active item has changed
-            if (closestIndex !== currentActiveIndex) {
-                currentActiveIndex = closestIndex;
-                updateBlueprintState(closestIndex);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    checkBlueprint();
+                    ticking = false;
+                });
+                ticking = true;
             }
-        }
+        },
+        onRefresh: checkBlueprint
     });
+
+    // Run once on load
+    checkBlueprint();
 
     function updateBlueprintState(activeIndex) {
         // Animate Icons
@@ -492,8 +575,43 @@ if (roadshowItems.length > 0 && roadshowImages.length > 0) {
     // Set initial state
     gsap.set(roadshowImages, { opacity: 0, scale: 1.1 });
 
+    // PERFORMANCE: Hide image container when section is passed
+    const roadshowSection = document.querySelector("#roadshows");
+    const roadshowImgContainer = document.querySelector("#roadshow-image-container");
+    if (roadshowSection && roadshowImgContainer) {
+        ScrollTrigger.create({
+            trigger: roadshowSection,
+            start: "bottom top",
+            onEnter: () => gsap.set(roadshowImgContainer, { visibility: "hidden" }),
+            onLeaveBack: () => gsap.set(roadshowImgContainer, { visibility: "visible" })
+        });
+    }
+
     let currentActiveRoadshow = null;
-    const stickyImageTop = 150; // Sticky position from CSS (top: 150px)
+    let ticking = false; // Throttle flag
+
+    const checkRoadshow = () => {
+        // Find which item is closest to the sticky image position
+        let closestTarget = null;
+        let closestDistance = Infinity;
+
+        roadshowItems.forEach((item) => {
+            const rect = item.getBoundingClientRect();
+            const itemCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(itemCenter - (window.innerHeight / 2));
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestTarget = item.getAttribute('data-target');
+            }
+        });
+
+        // Only update if the active item has changed
+        if (closestTarget && closestTarget !== currentActiveRoadshow) {
+            currentActiveRoadshow = closestTarget;
+            updateRoadshowState(closestTarget);
+        }
+    };
 
     // Create a single ScrollTrigger that continuously monitors scroll position
     ScrollTrigger.create({
@@ -501,28 +619,19 @@ if (roadshowItems.length > 0 && roadshowImages.length > 0) {
         start: "top bottom",
         end: "bottom top",
         onUpdate: (self) => {
-            // Find which item is closest to the sticky image position
-            let closestTarget = null;
-            let closestDistance = Infinity;
-
-            roadshowItems.forEach((item) => {
-                const rect = item.getBoundingClientRect();
-                const itemCenter = rect.top + rect.height / 2;
-                const distance = Math.abs(itemCenter - (window.innerHeight / 2));
-
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestTarget = item.getAttribute('data-target');
-                }
-            });
-
-            // Only update if the active item has changed
-            if (closestTarget && closestTarget !== currentActiveRoadshow) {
-                currentActiveRoadshow = closestTarget;
-                updateRoadshowState(closestTarget);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    checkRoadshow();
+                    ticking = false;
+                });
+                ticking = true;
             }
-        }
+        },
+        onRefresh: checkRoadshow
     });
+
+    // Run once on load
+    checkRoadshow();
 
     function updateRoadshowState(targetId) {
         // 1. Highlight List Item
