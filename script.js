@@ -2,7 +2,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const lenis = new Lenis({
     duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    // easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
 });
 
 lenis.on("scroll", ScrollTrigger.update);
@@ -40,6 +40,7 @@ if (heroSection && heroVideo && heroRectEl) {
             height: "100vh",
             borderRadius: "0px", // Optional: smoothly remove radius
             ease: "none",
+            aspectRatio: "auto",
             scrollTrigger: {
                 trigger: heroSection,
                 start: "top top",
@@ -57,7 +58,7 @@ window.addEventListener("load", () => ScrollTrigger.refresh());
 // ----------------------------
 // HERO 3D TILT EFFECT
 // ----------------------------
-const heroClipContainer = document.querySelector(".hero-clip-container");
+const heroClipContainer = document.querySelector(".hero-clip-wrapper");
 const tiltState = { intensity: 1 }; // State to control tilt strength
 
 if (heroSection && heroVideo && heroClipContainer) {
@@ -69,34 +70,35 @@ if (heroSection && heroVideo && heroClipContainer) {
         end: "+=50%",
         scrub: true,
         onUpdate: (self) => {
-            // self.progress goes from 0 to 1. We want intensity 1 to 0.
             tiltState.intensity = 1 - self.progress;
         }
     });
 
+    // Optimize with quickTo for performance
+    const clipRotTo = gsap.quickTo(heroClipContainer, "rotation", { duration: 0.5, ease: "power1.out" });
+    const vidRotYTo = gsap.quickTo(heroVideo, "rotationY", { duration: 0.5, ease: "power1.out" });
+    const vidRotXTo = gsap.quickTo(heroVideo, "rotationX", { duration: 0.5, ease: "power1.out" });
+
+    // Set initial properties for acceleration
+    gsap.set([heroClipContainer, heroVideo], { transformPerspective: 1000, transformOrigin: "center center", force3D: true });
+
     window.addEventListener("mousemove", (e) => {
+        if (tiltState.intensity <= 0.01) return; // Skip if intensity is negligible
+
         const xPos = (e.clientX / window.innerWidth) - 0.5;
         const yPos = (e.clientY / window.innerHeight) - 0.5;
+        const intensity = tiltState.intensity;
 
-        // Animate Clip Container (Tilt A)
-        gsap.to(heroClipContainer, {
-            rotation: xPos * 10 * tiltState.intensity,  // Multiply by intensity
-            scale: 1.03, // Inverted Y axis for natural feel
-            transformPerspective: 1000,
-            transformOrigin: "center center",
-            ease: "power1.out",
-            duration: 0.5
-        });
+        // Animate Clip Container (Tilt A) - Only Rotation needs continuous update
+        clipRotTo(xPos * 10 * intensity);
+
+        // Ensure scale is maintained (could be moved to Enter/Leave if strictly hover, but this is window level)
+        // We'll trust CSS or simple tween for scale to avoid thrashing, or just include it if needed. 
+        // Original code had scale: 1.03. We'll set it once or let the mouse interaction handle it subtly.
 
         // Animate Video Element (Tilt B - Opposite Direction)
-        gsap.to(heroVideo, {
-            rotationY: -xPos * 10 * tiltState.intensity, // Multiply by intensity
-            rotationX: yPos * 10 * tiltState.intensity,
-            transformPerspective: 1000,
-            transformOrigin: "center center",
-            ease: "power1.out",
-            duration: 0.5
-        });
+        vidRotYTo(-xPos * 10 * intensity);
+        vidRotXTo(yPos * 10 * intensity);
     });
 }
 // ----------------------------
@@ -114,7 +116,7 @@ if (maskingImage && overviewTexts.length > 0) {
         ease: "power2.out",
         scrollTrigger: {
             trigger: maskingImage,
-            start: "bottom top", // When bottom of mask hits top of viewport
+            start: "bottom center", // When bottom of mask hits top of viewport
             toggleActions: "play none none reverse"
         }
     });
@@ -259,6 +261,7 @@ if (awardsSection && jawUpper && jawLower) {
     // using max-height for smooth transition from 0 
     tl.to(awardsSection, {
         maxHeight: "150vh", // Use a value large enough to fit content
+        minHeight: "100vh",
         duration: 5,
         ease: "power1.inOut",
         onUpdate: () => ScrollTrigger.refresh() // Recalculate layout continuously as height changes
@@ -589,3 +592,71 @@ addSectionTiltEffect("#roadshows", "#roadshow-image-container", 5);
 addSectionTiltEffect("#impact", ".impact-img-wrapper", 5);
 
 
+
+// ----------------------------
+// UNIVERSAL TEXT REVEAL ANIMATION (CLIP REVEAL)
+// ----------------------------
+// Selects headings and paragraphs to apply a "masked slide-up" effect
+
+// We need to wait for DOM to be ready and potentially layout to settle
+window.addEventListener("load", () => {
+    // Select elements - be careful not to break specific components
+    const revealElements = document.querySelectorAll("section h1, section h2, section h3, section h4, section h5, section h6, section p.lead");
+
+    // Valid elements to animate
+    const itemsToAnimate = [];
+
+    revealElements.forEach(el => {
+        // Skip conditionals
+        if (el.closest('#hero') || el.closest('.carousel-caption') || el.closest('.stack-card') ||
+            el.closest('.nav') || el.classList.contains('no-reveal') || el.classList.contains('impact-number')) return;
+
+        const originalText = el.innerText;
+        if (!originalText.trim()) return;
+
+        // Create a wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'reveal-wrapper'; // Use class for potentially cleaner DOM
+        Object.assign(wrapper.style, {
+            overflow: 'hidden',
+            display: 'block',
+            margin: '0',
+            padding: '0'
+        });
+
+        const inner = document.createElement('div');
+        inner.className = 'text-reveal-inner';
+        inner.style.display = 'block';
+        // Optimize: promote to layer
+        inner.style.willChange = 'transform, opacity';
+
+        // Move children
+        while (el.firstChild) {
+            inner.appendChild(el.firstChild);
+        }
+
+        wrapper.appendChild(inner);
+        el.appendChild(wrapper);
+
+        // Prep animation state
+        gsap.set(inner, { y: "100%", opacity: 0 });
+        itemsToAnimate.push(inner);
+    });
+
+    // Use Batch for performance (creates fewer ScrollTriggers)
+    ScrollTrigger.batch(itemsToAnimate, {
+        start: "top 85%",
+        once: true,
+        onEnter: batch => {
+            gsap.to(batch, {
+                y: "0%",
+                opacity: 1,
+                duration: 1.0,
+                ease: "power4.out",
+                stagger: 0.05,
+                overwrite: true,
+                force3D: true
+            });
+        }
+    });
+});

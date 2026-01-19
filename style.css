@@ -28,8 +28,9 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Lexend', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
 }
 
 /* Global Modern Overrides */
@@ -115,7 +116,7 @@ body {
 }
 
 .carousel-caption {
-    bottom: 20%;
+    bottom: 10%;
     text-align: left;
     left: 5%;
     right: 5%;
@@ -212,7 +213,16 @@ body {
     border: 1px solid #000;
     margin-bottom: 80px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
+    /* transition: transform 0.3s ease; Removed to prevent conflict with GSAP */
+}
+
+.stack-card p {
+    max-width: 50%;
+}
+
+.stack-card h6 span {
+    font-size: 5vw;
+    ;
 }
 
 .stack-card:nth-child(1) {
@@ -491,7 +501,7 @@ footer {
     top: 0;
     left: 0;
     z-index: 1;
-    background-image: url("assets/masking-slide/masking-image-01.png");
+    background-image: url("assets/masking-slide/white.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -598,22 +608,22 @@ footer {
 }
 
 /* Micro-interactions & Animations */
-.hover-card {
+/* .hover-card {
     transition: all var(--transition-fast);
 }
 
 .hover-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-hover) !important;
-}
+} */
 
-.scale-hover {
+/* .scale-hover {
     transition: transform var(--transition-smooth);
 }
 
 .scale-hover:hover {
     transform: scale(1.05);
-}
+} */
 
 /* Glassmorphism utilities if needed later */
 .glass-panel {
@@ -621,6 +631,10 @@ footer {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.nav-item {
+    font-size: 14px;
 }
 
 /* Soft section separators */
@@ -643,9 +657,9 @@ footer {
     left: 0;
     overflow: hidden;
     pointer-events: none;
-    background: #eae3dc;
     z-index: 1;
     position: relative;
+
 }
 
 .hero-clip-container,
@@ -653,6 +667,30 @@ footer {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+
+#hero h1 {
+    mix-blend-mode: color-dodge;
+    color: #666;
+    opacity: 0.3;
+}
+
+.line-left {
+    font-size: 3vw;
+    line-height: 1.2;
+    color: #fff;
+    padding: 0 2vw;
+}
+
+.line-right {
+    font-size: 1.1vw;
+    line-height: 1.2;
+    padding: 0 2vw;
+    ;
+}
+
+.hero-shape-bottom {
+    mix-blend-mode: difference;
 }
 
 .hero-clip-figure {
@@ -695,7 +733,7 @@ footer {
     --bg-currentcolor: var(--primary-color);
     will-change: transform;
     clip-path: polygon(25% 0px, 75% 0px, 51% 100%, 49% 100%);
-    outline: red solid 1px;
+
 }
 
 .hero-shape-bottom {
@@ -716,9 +754,29 @@ footer {
     height: 100%;
 }
 
+.blueprint-item .text-reveal-inner {
+    font-size: 4vw;
+    line-height: 1;
+}
+
+.carousel-inner .overlay:after {
+    background: linear-gradient(180deg, #00000000 0%, #000 40%);
+    opacity: 0.5;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-inner img {
+    opacity: 1;
+}
+
 /* Impact Section Interaction Styles */
 #impact .impact-dynamic-title {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     color: var(--primary-color);
 }
 
@@ -739,13 +797,11 @@ footer {
     font-weight: bold;
 }
 
-.impact-img-wrapper {
-    transition: transform 0.5s ease;
-}
 
-.impact-img-wrapper:hover {
+
+/* .impact-img-wrapper:hover {
     transform: scale(1.02);
-}
+} Hover scale removed to avoid conflict with JS 3D tilt */
 
 /* Retrospective Section Interaction Styles */
 .retrospective-card {
@@ -808,7 +864,7 @@ footer {
 /* Roadshow Section Updates */
 .roadshow-item {
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s, padding 0.3s, border 0.3s, opacity 0.3s;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     opacity: 0.4;
     /* Dim by default */
@@ -827,4 +883,8 @@ footer {
 #roadshow-image-container {
     transform: translateZ(0);
     /* Hardware accel for rounding */
+}
+
+#register {
+    min-height: auto;
 }
