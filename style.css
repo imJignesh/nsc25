@@ -139,7 +139,15 @@ body {
 .blueprint-item {
     padding: 2rem 0;
     border-bottom: 1px solid #dee2e6;
+    transition: all 0.5s ease;
+    opacity: 0.3;
+    transform: scale(0.8);
+    transform-origin: 0% 50%;
+}
 
+.blueprint-item.active {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .blueprint-item:last-child {
@@ -291,6 +299,7 @@ body {
 
 #confluence {
     min-height: 300px;
+    background: radial-gradient(farthest-corner at right bottom, rgba(255, 255, 255, 1) -50%, rgba(163, 35, 28, 1) 48%);
 }
 
 /* Confluence Styles */
@@ -347,15 +356,17 @@ body {
 
 .speaker-card {
     border: 1px solid #eee;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 10px;
     overflow: hidden;
+    transform: perspective(1000px) rotateY(-3deg) rotateX(2deg);
+    transform-style: preserve-3d;
 }
 
 .speaker-card:hover {
     border-color: #000;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-    /* Small shadow effect */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(-5px);
 }
 
 .award-list-item {
@@ -564,6 +575,10 @@ footer {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.bg-primary {
+    background-color: #a3221b !important;
+}
+
 /* Sponsor Section Styles */
 .sponsor-logo {
     max-width: 240px;
@@ -613,7 +628,8 @@ footer {
 
 .mil-hero-video {
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     left: 0;
     width: 100%;
     height: 100%;
@@ -623,7 +639,7 @@ footer {
 .mil-hero-video canvas {
     width: 100%;
     height: 100%;
-    transform: translateY(0%) translateX(40%) scale(1.5);
+    transform: translateY(0%) translateX(30%) scale(1.5);
 }
 
 .text-primary {
@@ -788,9 +804,15 @@ footer {
 }
 
 .blueprint-item .text-reveal-inner {
-    font-size: 4vw;
+    font-size: 3vw;
     line-height: 1;
 }
+
+.blueprint-item.active .text-reveal-inner {
+    font-size: 3vw;
+    line-height: 1;
+}
+
 
 .carousel-inner .overlay:after {
     background: linear-gradient(180deg, #00000000 0%, #000 40%);

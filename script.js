@@ -128,39 +128,59 @@ const blueprintItems = document.querySelectorAll(".blueprint-item");
 const blueprintIcons = document.querySelectorAll(".blueprint-icon");
 
 if (blueprintItems.length > 0 && blueprintIcons.length > 0) {
-    // Initial state: hide all except first (ScrollTrigger will update if needed)
+    // Initial state: hide all icons, show first
     gsap.set(blueprintIcons, { autoAlpha: 0, scale: 0.8 });
     gsap.set(blueprintIcons[0], { autoAlpha: 1, scale: 1 });
-    gsap.set(blueprintItems[0], { opacity: 1, background: "#f8f9fa" });
+    blueprintItems[0].classList.add('active');
 
-    blueprintItems.forEach((item, index) => {
-        ScrollTrigger.create({
-            trigger: item,
-            start: "top 60%", // Trigger when item top hits 60% of viewport height
-            end: "bottom 60%",
-            onEnter: () => updateBlueprintState(index),
-            onEnterBack: () => updateBlueprintState(index),
-        });
+    let currentActiveIndex = 0;
+    const stickyPosition = window.innerHeight * 0.4; // 40vh sticky position
+
+    // Create a single ScrollTrigger that continuously monitors scroll position
+    ScrollTrigger.create({
+        trigger: ".blueprint-list",
+        start: "top bottom",
+        end: "bottom top",
+        onUpdate: (self) => {
+            // Find which item is closest to the sticky position
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+
+            blueprintItems.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                const itemCenter = rect.top + rect.height / 2;
+                const distance = Math.abs(itemCenter - stickyPosition);
+
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = index;
+                }
+            });
+
+            // Only update if the active item has changed
+            if (closestIndex !== currentActiveIndex) {
+                currentActiveIndex = closestIndex;
+                updateBlueprintState(closestIndex);
+            }
+        }
     });
 
     function updateBlueprintState(activeIndex) {
         // Animate Icons
         blueprintIcons.forEach((icon, i) => {
             if (i === activeIndex) {
-                // Smooth entry
                 gsap.to(icon, { autoAlpha: 1, scale: 3, duration: 0.6, ease: "power2.out", overwrite: true });
             } else {
-                // Smooth exit
                 gsap.to(icon, { autoAlpha: 0, scale: 0.8, duration: 0.4, ease: "power2.out", overwrite: true });
             }
         });
 
-        // Animate List Items
+        // Toggle Active Class
         blueprintItems.forEach((item, i) => {
             if (i === activeIndex) {
-                gsap.to(item, { opacity: 1, backgroundColor: "#f8f9fa", scale: 1.02, duration: 0.3, overwrite: true });
+                item.classList.add('active');
             } else {
-                gsap.to(item, { opacity: 0.5, backgroundColor: "#ffffff", scale: 1, duration: 0.3, overwrite: true });
+                item.classList.remove('active');
             }
         });
     }
@@ -228,8 +248,8 @@ if (stackCards.length > 0) {
                 ease: "none",
                 scrollTrigger: {
                     trigger: nextCard,
-                    start: "top bottom", // When top of next card hits bottom of viewport 
-                    end: "top top+=200", // When next card is well into view (adjustable)
+                    start: "top top+=400px", // Start when next card is 400px from top
+                    end: "top top-=100px", // End when next card is 100px past top (gives ~500px animation window)
                     scrub: true,
                     // markers: true 
                 }
@@ -472,6 +492,38 @@ if (roadshowItems.length > 0 && roadshowImages.length > 0) {
     // Set initial state
     gsap.set(roadshowImages, { opacity: 0, scale: 1.1 });
 
+    let currentActiveRoadshow = null;
+    const stickyImageTop = 150; // Sticky position from CSS (top: 150px)
+
+    // Create a single ScrollTrigger that continuously monitors scroll position
+    ScrollTrigger.create({
+        trigger: ".roadshow-list",
+        start: "top bottom",
+        end: "bottom top",
+        onUpdate: (self) => {
+            // Find which item is closest to the sticky image position
+            let closestTarget = null;
+            let closestDistance = Infinity;
+
+            roadshowItems.forEach((item) => {
+                const rect = item.getBoundingClientRect();
+                const itemCenter = rect.top + rect.height / 2;
+                const distance = Math.abs(itemCenter - (window.innerHeight / 2));
+
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestTarget = item.getAttribute('data-target');
+                }
+            });
+
+            // Only update if the active item has changed
+            if (closestTarget && closestTarget !== currentActiveRoadshow) {
+                currentActiveRoadshow = closestTarget;
+                updateRoadshowState(closestTarget);
+            }
+        }
+    });
+
     function updateRoadshowState(targetId) {
         // 1. Highlight List Item
         roadshowItems.forEach(item => {
@@ -489,33 +541,20 @@ if (roadshowItems.length > 0 && roadshowImages.length > 0) {
             // Animate others out
             roadshowImages.forEach(img => {
                 if (img !== activeImg) {
-                    gsap.to(img, { opacity: 0, duration: 0.3, overwrite: true });
+                    gsap.to(img, { opacity: 0, scale: 1.1, duration: 0.4, ease: "power2.out", overwrite: true });
                 }
             });
 
-            // Animate active in
+            // Animate active in with smooth scale
             gsap.to(activeImg, {
                 opacity: 1,
                 scale: 1,
-                duration: 0.6,
+                duration: 0.8,
                 ease: "power2.out",
                 overwrite: true
             });
         }
     }
-
-    // Create ScrollTriggers for each item
-    roadshowItems.forEach((item, index) => {
-        ScrollTrigger.create({
-            trigger: item,
-            start: "top 60%",  // Trigger when item is near center
-            end: "bottom 40%",
-            onEnter: () => updateRoadshowState(item.getAttribute('data-target')),
-            onEnterBack: () => updateRoadshowState(item.getAttribute('data-target')),
-            // Optional: Set first one active initially if needed, 
-            // but ScrollTrigger usually catches it on load if it's in view
-        });
-    });
 }
 
 
