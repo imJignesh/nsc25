@@ -984,6 +984,10 @@ footer {
         padding-left: 6vw !important;
         padding-right: 6vw !important;
     }
+
+    .display-1 {
+        font-size: 7rem;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -1008,7 +1012,7 @@ footer {
     }
 
     .navbar-nav .nav-link {
-        font-size: 0.75rem !important;
+        font-size: 0.8rem !important;
         letter-spacing: 0 !important;
     }
 }
