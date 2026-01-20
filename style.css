@@ -845,11 +845,11 @@ footer {
 
 
 .carousel-inner .overlay:after {
-    background: linear-gradient(180deg, #00000000 0%, #000 40%);
-    opacity: 0.5;
+    background: linear-gradient(179deg, #00000000 30%, #000000ad 60%);
+    opacity: 1;
     content: '';
     position: absolute;
-    top: 50%;
+    top: 0%;
     left: 0;
     width: 100%;
     height: 100%;
