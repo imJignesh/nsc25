@@ -973,3 +973,42 @@ footer {
 #register {
     min-height: auto;
 }
+
+/* =========================================
+   General Overall Changes: Increased Side Margins
+   ========================================= */
+@media (min-width: 1200px) {
+
+    .container,
+    .container-fluid {
+        padding-left: 6vw !important;
+        padding-right: 6vw !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+
+    .container,
+    .container-fluid {
+        padding-left: 4vw !important;
+        padding-right: 4vw !important;
+    }
+}
+
+/* =========================================
+   Laptop Menu Optimization (Prevents Logo Cutoff)
+   ========================================= */
+@media (min-width: 992px) and (max-width: 1366px) {
+    .navbar-nav {
+        gap: 0.8rem !important;
+    }
+
+    .navbar-brand {
+        max-width: 140px;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 0.75rem !important;
+        letter-spacing: 0 !important;
+    }
+}
