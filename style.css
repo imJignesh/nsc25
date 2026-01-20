@@ -413,6 +413,7 @@ html.lenis body {
 section {
     min-height: 100vh;
     position: relative;
+
 }
 
 section:nth-child(2) {
@@ -861,7 +862,7 @@ footer {
 
 /* Impact Section Interaction Styles */
 #impact .impact-dynamic-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     color: var(--primary-color);
 }
 
@@ -972,6 +973,10 @@ footer {
 
 #register {
     min-height: auto;
+}
+
+.data-text {
+    display: block;
 }
 
 /* =========================================

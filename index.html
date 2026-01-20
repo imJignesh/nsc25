@@ -50,7 +50,7 @@
     <section id="hero" class="border-bottom d-flex flex-column position-relative overflow-hidden">
 
 
-        <div class="container-fluid flex-grow-1 d-flex flex-column h-screen position-fixed top-0 start-0 w-100"
+        <div class="container-fluid flex-grow-1 d-flex flex-column h-screen position-relative position-md-fixed top-0 start-0 w-100 hero-head"
             style="z-index: 1;">
 
             <div class="row flex-grow-1 align-items-center py-5 h-100 z-3 position-relative">
@@ -67,7 +67,7 @@
                     <div id="hero-rect"></div>
                 </div>
                 <div class="col-lg-4">
-                    <p class="text-muted small mb-0 line-right">
+                    <p class="text-muted small mb-0 line-right mobile-white-bg">
                         India’s tech SMEs are no longer asking how to survive. We are rebuilding growth models,
                         capabilities, and talent for an AI-shaped world.
                     </p>
@@ -107,8 +107,8 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid  position-relative h-screen "></div>
-        <div class="container-fluid  position-relative h-screen "></div>
+        <div class="container-fluid  position-relative h-screen d-none d-md-block"></div>
+        <div class="container-fluid  position-relative h-screen d-none d-md-block"></div>
 
         <div id="hero-video">
             <div class="placeholder-box w-100 mx-auto"
@@ -167,7 +167,7 @@
                 <!-- Left: Sticky Title -->
                 <div class="col-lg-4">
                     <div class="sticky-wrapper" style="top: 40vh;">
-                        <h2 class="display-4 fw-bold text-uppercase text-primary">KEY TAKEAWAYS OF THE RESET </h2>
+                        <h2 class="display-6 fw-bold text-uppercase text-primary">KEY TAKEAWAYS OF THE RESET </h2>
                         <div class="mt-4 pt-4 border-top border-accent w-25"></div>
                     </div>
                 </div>
@@ -455,7 +455,7 @@
     <!-- Section 7: Impact Momentum -->
     <section id="impact" class="py-5 bg-white border-bottom">
         <div class="container py-5">
-            <h2 class="display-4 fw-bold text-uppercase ls-tight mb-5 text-center">NSC 2025 Highlights</h2>
+            <h2 class="display-5 mb-4 fw-bold text-uppercase ls-tight mb-5 text-center">NSC 2025 Highlights</h2>
 
             <div class="row">
                 <!-- Left Column: Sticky Title -->
@@ -482,6 +482,12 @@
                                         style="transform: translateY(20px); transition: transform 0.5s ease;">750+</span>
                                 </div>
                             </div>
+                            <!-- Mobile Labels -->
+                            <div class="d-lg-none mt-3">
+                                <h5 class="fw-bold text-uppercase text-primary mb-2">Attendees Reached</h5>
+                                <p class="text-muted small mb-0">The total number of delegates at the flagship 2025
+                                    Confluence, representing the core of India's tech SME sector.</p>
+                            </div>
                             <!-- Data for JS updates -->
                             <div class="d-none impact-data-source">
                                 <span class="data-title">Attendees Reached</span>
@@ -501,6 +507,12 @@
                                         style="transform: translateY(20px); transition: transform 0.5s ease;">70+</span>
                                 </div>
                             </div>
+                            <!-- Mobile Labels -->
+                            <div class="d-lg-none mt-3">
+                                <h5 class="fw-bold text-uppercase text-primary mb-2">Global Speakers</h5>
+                                <p class="text-muted small mb-0">Including ambassadors, policy-makers, and industry
+                                    veterans sharing actionable insights.</p>
+                            </div>
                             <div class="d-none impact-data-source">
                                 <span class="data-title">Global Speakers</span>
                                 <span class="data-text">Including ambassadors, policy-makers, and industry veterans
@@ -519,6 +531,12 @@
                                         style="transform: translateY(20px); transition: transform 0.5s ease;">3.5K+</span>
                                 </div>
                             </div>
+                            <!-- Mobile Labels -->
+                            <div class="d-lg-none mt-3">
+                                <h5 class="fw-bold text-uppercase text-primary mb-2">Member Companies</h5>
+                                <p class="text-muted small mb-0">Our powerful community representing the breadth of
+                                    India’s tech ecosystem.</p>
+                            </div>
                             <div class="d-none impact-data-source">
                                 <span class="data-title">Member Companies</span>
                                 <span class="data-text">Our powerful community representing the breadth of India’s tech
@@ -536,6 +554,12 @@
                                     <span class="impact-number display-1 fw-black text-white ls-tight"
                                         style="transform: translateY(20px); transition: transform 0.5s ease;">30+</span>
                                 </div>
+                            </div>
+                            <!-- Mobile Labels -->
+                            <div class="d-lg-none mt-3">
+                                <h5 class="fw-bold text-uppercase text-primary mb-2">Strategic Sessions</h5>
+                                <p class="text-muted small mb-0">Deep dives into AI, global trade, and digital
+                                    transformation.</p>
                             </div>
                             <div class="d-none impact-data-source">
                                 <span class="data-title">Strategic Sessions</span>
@@ -565,12 +589,12 @@
 
     <!-- Section 8: Retrospective -->
     <section id="retrospective"
-        class="vh-100 position-relative bg-light border-bottom overflow-hidden d-flex flex-column justify-content-center">
+        class="  position-relative bg-light border-bottom overflow-hidden d-flex flex-column justify-content-center py-5">
 
         <div class="position-absolute w-100 text-center"
             style="bottom: 0; left: 0; z-index: 0; opacity: 0.03; pointer-events: none;">
             <h1 class="display-1 fw-black text-uppercase mb-0 ls-tight"
-                style="font-weight:bold; font-size: calc(3rem + 12vw); ">A LOOK
+                style="font-weight:bold; font-size: calc(3rem + 10vw); ">A LOOK
                 BACK AT NSC 2025</h1>
         </div>
 
@@ -765,7 +789,7 @@
 
     <!-- Section 10: Pricing -->
     <section id="register" class="py-5 bg-accent text-white border-bottom">
-        <div class="container py-5 text-center">
+        <div class="container py-0 text-center">
             <h2 class="fw-bold text-uppercase ls-tight ">Tickets</h2>
             <p class="opacity-75">A 3-city confluence focused on transformation, AI-led change, and leadership
                 priorities for tech SMEs</p>
@@ -973,7 +997,7 @@
     </section>
 
     <section id="sponsors" class="py-5 bg-white border-bottom">
-        <div class="container py-5 text-center">
+        <div class="container py-2 text-center">
             <h2 class="display-4 text-primary fw-bold text-uppercase ls-tight mb-5">Our Sponsors</h2>
 
             <!-- SME Inspire Awards -->
@@ -1069,7 +1093,7 @@
                         exchange, strategic networking, and the grand finale of The Reset.</p>
                 </div>
             </div>
-            <div class="row px-4">
+            <div class="row px-0">
                 <div class="col-lg-6">
                     <div class="sticky-top" style="top: 150px; height: auto;">
 
@@ -1221,23 +1245,21 @@
             <!-- Navigation Menu (Stretchy) -->
             <div class="d-none d-lg-flex flex-grow-1 justify-content-center">
                 <ul class="navbar-nav d-inline-flex flex-row gap-4">
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase" href="#hero">Home</a></li>
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase"
-                            href="#highlights">Overview</a></li>
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase" href="#blueprint">Key
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#hero">Home</a></li>
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#highlights">Overview</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#blueprint">Key
                             Takeaways</a></li>
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase"
-                            href="#awards">Achievements</a></li>
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase"
-                            href="#retrospective">Highlights</a></li>
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase" href="#speakers">Past
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#awards">Achievements</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#retrospective">Highlights</a></li>
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#speakers">Past
                             Speakers</a></li>
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase"
-                            href="#register">Registration</a></li>
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase"
-                            href="#sponsors">Sponsors</a></li>
-                    <li class="nav-item"><a class="nav-link p-0 small fw-bold text-uppercase"
-                            href="#confluence">Location</a></li>
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#register">Registration</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#sponsors">Sponsors</a></li>
+                    <li class="nav-item"><a class="nav-link p-0 small" href="#confluence">Location</a>
+                    </li>
                 </ul>
             </div>
 
