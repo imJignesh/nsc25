@@ -438,6 +438,7 @@ if (impactSection && impactItems.length > 0 && impactTitle && impactText) {
 
         if (overlay && number) {
             gsap.to(overlay, { opacity: 1, duration: 0.3 });
+            // gsap.to(overlay.querySelector("img"), { opacity: 0.5, duration: 0.3 });
             gsap.fromTo(number,
                 { y: 20, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.7)" }

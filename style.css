@@ -234,7 +234,8 @@ body {
 
 .stack-card h6 span {
     font-size: 5vw;
-    ;
+    color: #7a1914;
+    font-weight: normal;
 }
 
 .stack-card:nth-child(1) {
@@ -303,7 +304,7 @@ body {
 
 #confluence {
     min-height: 300px;
-    background: radial-gradient(farthest-corner at right bottom, rgba(255, 255, 255, 1) -50%, rgba(163, 35, 28, 1) 48%);
+    background: radial-gradient(farthest-corner at right bottom, rgba(163, 35, 28, 1) -50%, rgba(163, 35, 28, 1) 48%);
 }
 
 /* Confluence Styles */
@@ -876,6 +877,7 @@ footer {
     backdrop-filter: blur(2px);
     pointer-events: none;
     font-weight: bold;
+    background: #7a1914;
 }
 
 .impact-number {
@@ -883,6 +885,9 @@ footer {
     font-weight: bold;
 }
 
+.impact-img-wrapper {
+    background: #7a1914;
+}
 
 
 /* .impact-img-wrapper:hover {
