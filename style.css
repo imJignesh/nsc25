@@ -984,6 +984,10 @@ footer {
     display: block;
 }
 
+.impact-image-item img {
+    opacity: 0.5;
+}
+
 /* =========================================
    General Overall Changes: Increased Side Margins
    ========================================= */
@@ -1024,5 +1028,11 @@ footer {
     .navbar-nav .nav-link {
         font-size: 0.8rem !important;
         letter-spacing: 0 !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .position-md-fixed {
+        position: fixed !important;
     }
 }

@@ -82,6 +82,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const heroSection = document.querySelector("#hero");
 const heroVideo = document.querySelector("#hero-video");
 const heroRectEl = document.querySelector("#hero-rect");
+const heroSequenceImg = document.querySelector("#hero-sequence-img");
+
+// Preload sequence images
+const imageCount = 4;
+const images = [];
+if (heroSequenceImg) {
+    for (let i = 1; i <= imageCount; i++) {
+        const img = new Image();
+        img.src = `assets/hero/static/banner-2/${i}.jpg`;
+        images.push(img);
+    }
+}
 
 if (heroSection && heroVideo && heroRectEl) {
     const getRect = () => heroRectEl.getBoundingClientRect();
@@ -107,6 +119,12 @@ if (heroSection && heroVideo && heroRectEl) {
                 end: "+=50%",
                 scrub: true,
                 invalidateOnRefresh: true,
+                onUpdate: (self) => {
+                    if (heroSequenceImg) {
+                        const frame = Math.max(0, Math.min(imageCount - 1, Math.floor(self.progress * imageCount)));
+                        heroSequenceImg.src = images[frame].src;
+                    }
+                }
             },
         }
     );
