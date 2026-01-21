@@ -67,11 +67,11 @@
 /* Mobile devices (max-width: 767px) */
 @media (max-width: 767px) {
     section {
-        min-height: 60vh;
+        min-height: 70vh;
     }
 
     .h-screen {
-        min-height: 60vh;
+        min-height: 70vh;
     }
 
     #masking-image {
@@ -80,7 +80,7 @@
     }
 
     .vh-100 {
-        height: 60vh !important;
+        height: 70vh !important;
     }
 
     .icons-holder {
@@ -92,6 +92,47 @@
 
     .stack-card p {
         max-width: 100%;
+    }
+
+    #hero .hero-head {
+        padding-top: 50px;
+    }
+
+    #hero h2 {
+        background: #a3221b;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .mobile-white-bg {
+        background: #fff;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    #hero .btn {
+        margin: 0 auto !important;
+        display: block;
+    }
+
+    .placeholder-box {
+        aspect-ratio: 9/16 !important;
+    }
+
+    .impact-overlay {
+        opacity: 1 !important;
+    }
+
+    html .impact-img-wrapper,
+    .impact-img-wrapper img {
+        height: 150px !important;
+        min-height: 100px !important;
+    }
+
+    .retrospective-content h4,
+    .retrospective-content p {
+        display: block;
+        opacity: 1;
     }
 
     /* Typography adjustments */
@@ -144,6 +185,10 @@
         font-size: 0.9rem !important;
     }
 
+    .blueprint-item img {
+        transform: scale(1.6);
+    }
+
     /* Stack cards */
     .stack-card {
         padding: 2rem !important;
@@ -172,7 +217,7 @@
 
     /* Confluence section */
     #confluence .mil-hero-video canvas {
-        transform: translateY(0%) translateX(0%) scale(1.2) !important;
+        transform: translateY(15%) translateX(0%) scale(1) !important;
     }
 
     /* Overlay MAsking image */
@@ -187,6 +232,45 @@
     #highlights-pin .carousel-inner img {
         height: 100% !important;
         object-fit: cover;
+    }
+}
+
+/* Mobile Menu Styles (Tablets and below) */
+@media (max-width: 991px) {
+    .navbar-toggler {
+        padding: 0.25rem;
+        font-size: 1.25rem;
+        line-height: 1;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        transition: box-shadow 0.15s ease-in-out;
+    }
+
+    .navbar-toggler:focus {
+        text-decoration: none;
+        outline: 0;
+        box-shadow: none;
+    }
+
+    .navbar-collapse {
+        background: #fff;
+        border-radius: 10px;
+        margin-top: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 0.75rem !important;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid #f8f9fa;
+    }
+
+    .navbar-nav .nav-item:last-child .nav-link {
+        border-bottom: none;
     }
 }
 
