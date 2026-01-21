@@ -165,7 +165,7 @@ body {
 #awards {
     overflow: hidden !important;
     /* We set max-height to 0 initially, but we remove the CSS transition so GSAP can handle it accurately with ScrollTrigger scrubbing */
-    max-height: 0;
+
     will-change: max-height;
     min-height: 300px !important
 }
