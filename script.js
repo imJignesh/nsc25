@@ -90,7 +90,7 @@ const images = [];
 if (heroSequenceImg) {
     for (let i = 1; i <= imageCount; i++) {
         const img = new Image();
-        img.src = `assets/hero/static/banner-2/${i}.jpg`;
+        img.src = `assets/hero/static/banner-1/${i}.png`;
         images.push(img);
     }
 }
